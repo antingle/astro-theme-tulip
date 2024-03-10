@@ -26,9 +26,7 @@ const { headings } = await post.render();
 		{!!headings.length && <TOC headings={headings} />}
 		<article class="flex-grow break-words" data-pagefind-body>
 			<div id="blog-hero"><BlogHero content={post} /></div>
-			<div
-				class="prose prose-sm prose-cactus mt-12 prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
-			>
+			<div class="prose prose-cactus mt-12 lg:prose-lg">
 				<slot />
 				<WebMentions />
 			</div>
@@ -71,4 +69,36 @@ const { headings } = await post.render();
 
 	const observer = new IntersectionObserver(callback);
 	observer.observe(targetHeader);
+
+	const fnObserver = () => {
+		function handleIntersection(entries: IntersectionObserverEntry[]) {
+			entries.forEach((entry) => {
+				const index = document.querySelector(`aside a[href="#${entry.target.id}"]`);
+
+				if (entry.isIntersecting) {
+					index?.classList.add("text-accent");
+				} else {
+					index?.classList.remove("text-accent");
+				}
+			});
+		}
+
+		const headings = document.querySelectorAll(
+			"div.prose h1, div.prose h2, div.prose h3, div.prose h4, div.prose h5, div.prose h6",
+		);
+
+		const options = {
+			root: null,
+			rootMargin: " 15% 0px 0% 0px ",
+			threshold: 1,
+		};
+
+		const observer = new IntersectionObserver(handleIntersection, options);
+
+		headings.forEach((heading) => {
+			observer.observe(heading);
+		});
+	};
+	fnObserver();
+	document.addEventListener("astro:after-swap", fnObserver);
 </script>

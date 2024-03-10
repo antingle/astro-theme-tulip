@@ -9,12 +9,12 @@ export const siteConfig: SiteConfig = {
 	// Meta property used as the default description meta property
 	description: "An opinionated starter theme for Astro",
 	// HTML lang property, found in src/layouts/Base.astro L:18
-	lang: "en-GB",
+	lang: "en-US",
 	// Meta property, found in src/components/BaseHead.astro L:42
-	ogLocale: "en_GB",
+	ogLocale: "en_US",
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	date: {
-		locale: "en-GB",
+		locale: "en-US",
 		options: {
 			day: "numeric",
 			month: "short",
@@ -45,7 +45,7 @@ export const menuLinks: Array<{ title: string; path: string }> = [
 // https://expressive-code.com/reference/configuration/
 export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 	// One dark, one light theme => https://expressive-code.com/guides/themes/#available-themes
-	themes: ["dracula", "github-light"],
+	themes: ["github-dark-dimmed", "github-light"],
 	themeCssSelector(theme, { styleVariants }) {
 		// If one dark and one light theme are available
 		// generate theme CSS selectors compatible with cactus-theme dark mode switch
